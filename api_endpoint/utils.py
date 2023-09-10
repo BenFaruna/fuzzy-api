@@ -12,13 +12,15 @@ def create_app() -> Flask:
     return app
 
 def create_database_session() -> Union[Engine, Session]:
-    DB_NAME = os.getenv("DB_NAME")
-    DB_HOST = os.getenv("DB_HOST")
-    DB_USER = os.getenv("DB_USER")
-    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    if not os.getenv("DB_URL"):
+        DB_NAME = os.getenv("DB_NAME")
+        DB_HOST = os.getenv("DB_HOST")
+        DB_USER = os.getenv("DB_USER")
+        DB_PASSWORD = os.getenv("DB_PASSWORD")
 
-    DB_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-    print(DB_URL)
+        DB_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+    else:
+        DB_URL = os.getenv(DB_URL)
 
     engine = create_engine(DB_URL)
     Session = sessionmaker(bind=engine)
