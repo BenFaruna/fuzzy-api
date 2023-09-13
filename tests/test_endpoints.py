@@ -3,8 +3,6 @@ import os
 import requests
 import unittest
 
-from api_endpoint.models.person import Person
-
 
 class TestAPIEndpoints(unittest.TestCase):
     """This class contain testcases for thr crud enpoint of the API"""
