@@ -39,6 +39,9 @@ def get_user(name):
 def create_user():
     body = request.get_json()
 
+    if not body:
+        return jsonify({"Error": "name data not supplied"}), 400
+
     try:
         new_person = Person(**body)
         session.add(new_person)
@@ -71,7 +74,7 @@ def update_name(name):
             user.name = body.get("new_name")
             session.commit()
         else:
-            return jsonify({"Error": "new name not supplied"}), 400
+            return jsonify({"Error": "new_name data not supplied"}), 400
     except Exception as e:
         session.rollback()
         return jsonify({"Error": str(e)}), 500
