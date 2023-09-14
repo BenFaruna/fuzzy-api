@@ -1,13 +1,16 @@
 import os
+import dotenv
 
 import requests
 import unittest
+
+dotenv.load_dotenv()
 
 
 class TestAPIEndpoints(unittest.TestCase):
     """This class contain testcases for thr crud enpoint of the API"""
 
-    base_url = os.getenv("API_URL", "http://localhost:5000/api/")
+    base_url = os.getenv("API_URL", "http://localhost:8080/api/")
 
     def setUp(self):
         self.name = "BenFaruna"
