@@ -23,7 +23,7 @@ class TestAPIEndpoints(unittest.TestCase):
         """test the create endpoint response without data"""
         res = requests.post(self.base_url, json={})
         self.assertEqual(res.status_code, 400)
-        self.assertEqual(res.json(), {"Error": "name data not supplied"})
+        self.assertEqual(res.json(), {"Error": "body data not supplied or name key not found"})
 
     def test_read_endpoint(self):
         """Test the read enpoint for correct response"""
@@ -43,7 +43,7 @@ class TestAPIEndpoints(unittest.TestCase):
     def test_update_endpoint(self):
         """test the update endpoint to ensure user detail is updated"""
         res = requests.put(self.base_url + self.name, json={"new_name": self.update_name})
-        self.assertEqual(res.json(), {"Success": "Name updated!"})
+        self.assertEqual(res.json(), {"Success": "Name updated"})
 
         new_res = requests.get(self.base_url + self.update_name)
         new_res2 = requests.get(self.base_url + self.name)
@@ -66,7 +66,7 @@ class TestAPIEndpoints(unittest.TestCase):
         requests.post(self.base_url, json={"name": user})
         res = requests.delete(self.base_url + user)
         self.assertEqual(res.status_code, 200)
-        self.assertEqual(res.json(), {"Success": f"{user} deleted!"})
+        self.assertEqual(res.json(), {"Success": f"{user} deleted"})
 
         new_res = requests.get(self.base_url + user)
         self.assertEqual(new_res.status_code, 404)
