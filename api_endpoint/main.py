@@ -25,15 +25,21 @@ def get_user(name):
                 "/api/<name> - all characters in <name> should be alphabets"
                 )
     except ValueError as e:
+        session.rollback()
         return jsonify({"Error": str(e)}), 400
 
 
-    person = session.query(Person).filter(Person.name == name).first()
+    try:
+        person = session.query(Person).filter(Person.name == name).first()
 
-    if person:
-        return jsonify(person.to_dict())
-    else:
-        return jsonify({"Error": f"{name} not found"}), 404
+        if person:
+            return jsonify(person.to_dict())
+        else:
+            return jsonify({"Error": f"{name} not found"}), 404
+    except Exception as e:
+        session.rollback()
+        return jsonify({"Error": str(e)})
+
 
 @app.route("/api", methods=["POST"], strict_slashes=False)
 def create_user():

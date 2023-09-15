@@ -2,6 +2,8 @@
 
 ## API Routes request and response
 
+**NB: POST, PUT and DELETE queries to the API endpoints should have a `Content-Type` of `application/json`.**
+
 ### POST /api
 
 Creates a new database entry
