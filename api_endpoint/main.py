@@ -38,7 +38,7 @@ def get_user(name):
             return jsonify({"Error": f"{name} not found"}), 404
     except Exception as e:
         session.rollback()
-        return jsonify({"Error": str(e)})
+        return jsonify({"Error": str(e)}), 500
 
 
 @app.route("/api", methods=["POST"], strict_slashes=False)

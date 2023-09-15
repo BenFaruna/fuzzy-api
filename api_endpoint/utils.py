@@ -22,7 +22,7 @@ def create_database_session() -> Union[Engine, Session]:
     else:
         DB_URL = os.getenv("DB_URL")
 
-    engine = create_engine(DB_URL)
+    engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=300, pool_use_lifo=True)
     Session = sessionmaker(bind=engine)
     session = Session()
     return engine, session
