@@ -20,7 +20,9 @@ class TestAPIEndpoints(unittest.TestCase):
         """Test the create endpoint"""
         res = requests.post(self.base_url, json={"name": self.name})
         # print(requests.delete(self.base_url + self.user))
-        self.assertEqual(res.json(), {"Success": "New user added"})
+        self.assertEqual(self.name, res.json().get("user").get("name"))
+        self.assertIn("Success", res.json())
+        self.assertIn("user", res.json())
 
     def test_create_endpoint_without_data(self):
         """test the create endpoint response without data"""
@@ -46,7 +48,9 @@ class TestAPIEndpoints(unittest.TestCase):
     def test_update_endpoint(self):
         """test the update endpoint to ensure user detail is updated"""
         res = requests.put(self.base_url + self.name, json={"new_name": self.update_name})
-        self.assertEqual(res.json(), {"Success": "Name updated"})
+        self.assertEqual(self.update_name, res.json().get("user").get("name"))
+        self.assertIn("Success", res.json())
+        self.assertIn("user", res.json())
 
         new_res = requests.get(self.base_url + self.update_name)
         new_res2 = requests.get(self.base_url + self.name)
