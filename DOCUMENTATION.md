@@ -20,7 +20,11 @@ Response:
 Status code: `201`
 ```
 {
-    "Success": "New user added"
+    "Success": "New user added",
+    "user": {
+        "id": integer,
+        "name": string
+    }
 }
 ```
 
@@ -57,7 +61,7 @@ Response:
 Status code: `200`
 ```
 {
-    "id": int,
+    "id": integer,
     "name": string
 }
 ```
@@ -91,7 +95,11 @@ Response:
 Status code: `200`
 ```
 {
-    "Success": "Name updated"
+    "Success": "Name updated",
+    "user": {
+        "id": integer,
+        "name": string
+    }
 }
 ```
 

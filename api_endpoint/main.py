@@ -52,7 +52,8 @@ def create_user():
         new_person = Person(**body)
         session.add(new_person)
         session.commit()
-        return jsonify({"Success": "New user added"}), 201
+        user = session.query(Person).filter(Person.name == body.get("name")).first()
+        return jsonify({"Success": "New user added", "user": user.to_dict()}), 201
     except Exception as e:
         session.rollback()
         return jsonify({"Error": "Name already exists"}), 403
@@ -79,13 +80,14 @@ def update_name(name):
         if user and body.get("new_name"):
             user.name = body.get("new_name")
             session.commit()
+            user = session.query(Person).filter(Person.name == body.get("new_name")).first()
+            return jsonify({"Success": "Name updated", "user": user.to_dict()})
         else:
             return jsonify({"Error": "new_name data not supplied"}), 400
     except Exception as e:
+        print(str(e))
         session.rollback()
         return jsonify({"Error": "Name already exists"}), 403
-
-    return jsonify({"Success": "Name updated"})
 
 
 @app.route("/api/<string:name>", methods=["DELETE"], strict_slashes=False)
