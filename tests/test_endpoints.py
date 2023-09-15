@@ -13,8 +13,8 @@ class TestAPIEndpoints(unittest.TestCase):
     base_url = os.getenv("API_URL", "http://localhost:8080/api/")
 
     def setUp(self):
-        self.name = "BenFaruna"
-        self.update_name = "FarunaBen"
+        self.name = "Neo"
+        self.update_name = "Nemo"
 
     def test_create_endpoint(self):
         """Test the create endpoint"""
